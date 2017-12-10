@@ -15,11 +15,15 @@ SPIDER_MODULES = ['jobbole.spiders']
 NEWSPIDER_MODULE = 'jobbole.spiders'
 
 
+# 随机更换user-agent
+RANDOM_UA_TYPE = "random"
+
+
 # Crawl responsibly by identifying yourself (and your website) on the user-agent
 #USER_AGENT = 'jobbole (+http://www.yourdomain.com)'
 
 # Obey robots.txt rules
-ROBOTSTXT_OBEY = True
+ROBOTSTXT_OBEY = False
 
 # Configure maximum concurrent requests performed by Scrapy (default: 16)
 #CONCURRENT_REQUESTS = 32
@@ -46,15 +50,18 @@ ROBOTSTXT_OBEY = True
 
 # Enable or disable spider middlewares
 # See http://scrapy.readthedocs.org/en/latest/topics/spider-middleware.html
-#SPIDER_MIDDLEWARES = {
-#    'jobbole.middlewares.JobboleSpiderMiddleware': 543,
-#}
+SPIDER_MIDDLEWARES = {
+   # 'jobbole.middlewares.JobboleSpiderMiddleware': 543,
+   # 'jobbole.middlewares.RandomUserAgentMiddleware': 400
+}
 
 # Enable or disable downloader middlewares
 # See http://scrapy.readthedocs.org/en/latest/topics/downloader-middleware.html
-#DOWNLOADER_MIDDLEWARES = {
-#    'jobbole.middlewares.MyCustomDownloaderMiddleware': 543,
-#}
+DOWNLOADER_MIDDLEWARES = {
+   # 'jobbole.middlewares.MyCustomDownloaderMiddleware': 543,
+   'jobbole.middlewares.RandomUserAgentMiddleware': 400,
+   'scrapy.downloadermiddlewares.useragent.UserAgentMiddleware': None
+}
 
 # Enable or disable extensions
 # See http://scrapy.readthedocs.org/en/latest/topics/extensions.html
@@ -64,9 +71,11 @@ ROBOTSTXT_OBEY = True
 
 # Configure item pipelines
 # See http://scrapy.readthedocs.org/en/latest/topics/item-pipeline.html
-#ITEM_PIPELINES = {
-#    'jobbole.pipelines.JobbolePipeline': 300,
-#}
+ITEM_PIPELINES = {
+   # 'jobbole.pipelines.JsonWithEncodingPipeline': 300,
+   'jobbole.pipelines.MysqlPipeline': 1
+    # 'jobble.pipelines.JsonWithEncodingPipeline': 1,
+}
 
 # Enable and configure the AutoThrottle extension (disabled by default)
 # See http://doc.scrapy.org/en/latest/topics/autothrottle.html

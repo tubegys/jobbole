@@ -2,7 +2,7 @@
 import scrapy
 from scrapy.http import Request
 from urllib.parse import urljoin
-from jobbole.items import JobboleArticleItemLoader
+from jobbole.items import JobboleArticleItemLoader, JobbolePythonArticleItem
 
 
 class PythonSpiderSpider(scrapy.Spider):
@@ -25,10 +25,12 @@ class PythonSpiderSpider(scrapy.Spider):
             yield Request(url=next_url, callback=self.parse)
 
     def parse_detail(self, response):
-        item_loader = JobboleArticleItemLoader()
+        item_loader = JobboleArticleItemLoader(item=JobbolePythonArticleItem(), response=response)
         item_loader.add_css('title', '.entry-header h1::text')
         item_loader.add_css('publish_time', '.entry-meta p::text')
         item_loader.add_value('url', response.url)
         item_loader.add_css('praise_num', '.post-adds span h10::text')
-        item_loader.add_css('fav_num', '.post-adds span::text')
-        item_loader.add_css('comment_num', '.post-adds span::text')
+        # item_loader.add_css('fav_num', '.post-adds span::text')
+        # item_loader.add_css('comment_num', '.post-adds span::text')
+        jobbole_article_item = item_loader.load_item()
+        yield jobbole_article_item
