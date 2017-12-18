@@ -1,14 +1,35 @@
 Redis 基本操作：
 字符串:
-1. set/get
+1. set/get key
 eg:  set course_name “scrapy-redis” >> ok
 	get course_name >> “scrapy-redis”
+
+2. incr key 默认不存在会创建，默认值为1
+3. incrby key num
+4. decr/decrby 类似于 incr/incrby,减少的意思
+5. incrbyfloat key num  浮点数（当数值较大的时候会丢失精度？）
+6. 没有 decrbyfloat命令
+7. 整型可以转换成浮点型，但是浮点型转换成整型的时候就会报错了！
+8. mset/mget 设置多个键
+9. 位操作 setbit/getbit
+10. 向尾部追加 append key value 
+
+
+
+
+
 哈希 (字典):
 1. hset course_dict teacher bobby
 hget course_dict teacher
 hgetall course_dict
 hkeys course_dict
 hvals course_dict
+hmset/hmget
+2. hsetnx  当不存在时创建，当存在时不执行任何操作
+3. hincrby key field num  散列是没有hincr命令的
+4. hdel key field 所有field都被删除了，则该键也被删除
+5. hlen key 获得字段的数量
+
 
 列表:
 lpush list_name values
@@ -43,5 +64,13 @@ redis多数据库概念：
 5）数据库不适合存放不同应用的程序。可以存放不同环境的数据
 比如 1号存放生产环境，2号存放测试环境
 
+redis 通用操作：
+1) keys *
+2) 判断一个key是否存在：exists key
+3) 删除：del key
+4）redis客户端只支持单个删除，若要多个删除，在shell中按如下操作：
+	redis-cli keys "key:*"|xargs redis-cli del
+	redis-cli del `redis-cli keys "key:*"` (性能高,注意是反点)
+5) 获得键的类型：type key
 
 
