@@ -1,0 +1,47 @@
+Redis 基本操作：
+字符串:
+1. set/get
+eg:  set course_name “scrapy-redis” >> ok
+	get course_name >> “scrapy-redis”
+哈希 (字典):
+1. hset course_dict teacher bobby
+hget course_dict teacher
+hgetall course_dict
+hkeys course_dict
+hvals course_dict
+
+列表:
+lpush list_name values
+lrange list_name start end
+lpop list_name
+blpop list_name timeout  // 阻塞型删除，会有等待时间
+lindex list_name index  // 查看某个下标的元素
+
+集合（set）不重复的列表list：
+sadd course_set “django”
+scard course_set 计算set中元素的个数
+sdiff course_1 course_2  // 2个set做减法，前面 – 后面，差集的意思
+sinter course_1 course_2  // 2个set的交集
+spop course_set  // 随机删除一个元素，并返回删除的元素
+srandmember course_set num  //随机获得num个元素
+smembers course_set  // 获得所有的元素
+
+
+可排序 集合：
+zadd zcourse_set 0 scrapy 1 django 10 scrapy-redis
+zrangebyscore  zcourse_set 0 5 // 查找0-5分的字段
+zcount zcourse_set 0 5  // 统计数量
+
+
+
+
+redis多数据库概念：
+1）redis 默认选择0号数据库，共支持16个数据库（编号到15）；
+2）通过select 0  选择数据库；
+3）flushall命令会把所有数据库的内容清空；
+4）一个客户端要不就可以访问所有数据库，要不就一个都访问不到
+5）数据库不适合存放不同应用的程序。可以存放不同环境的数据
+比如 1号存放生产环境，2号存放测试环境
+
+
+
