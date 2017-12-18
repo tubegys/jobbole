@@ -18,6 +18,9 @@ NEWSPIDER_MODULE = 'jobbole.spiders'
 # 随机更换user-agent
 RANDOM_UA_TYPE = "random"
 
+SCHEDULER = "scrapy_redis.scheduler.Scheduler"
+DUPEFILTER_CLASS = "scrapy_redis.dupefilter.RFPDupeFilter"
+
 
 # Crawl responsibly by identifying yourself (and your website) on the user-agent
 #USER_AGENT = 'jobbole (+http://www.yourdomain.com)'
@@ -73,7 +76,8 @@ DOWNLOADER_MIDDLEWARES = {
 # See http://scrapy.readthedocs.org/en/latest/topics/item-pipeline.html
 ITEM_PIPELINES = {
    # 'jobbole.pipelines.JsonWithEncodingPipeline': 300,
-   'jobbole.pipelines.MysqlPipeline': 1
+   'jobbole.pipelines.MysqlPipeline': 1,
+   'scrapy_redis.pipelines.RedisPipeline': 300
     # 'jobble.pipelines.JsonWithEncodingPipeline': 1,
 }
 

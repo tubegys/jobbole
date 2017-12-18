@@ -3,4 +3,5 @@ import sys
 import os
 
 sys.path.append(os.path.dirname(os.path.abspath(__file__)))
-execute(["scrapy", "crawl", "python_spider"])
+# execute(["scrapy", "crawl", "python_spider"])
+execute(["scrapy", "crawl", "jobbole1"])
